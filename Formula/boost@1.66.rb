@@ -12,14 +12,6 @@ class BoostAT166 < Formula
     sha256 "6352d4f65d7595c1eff62c6ce07588944122fa3305a77813fdbc16747b7dddce" => :el_capitan
   end
 
-  option "with-icu4c", "Build regexp engine with icu support"
-  option "without-single", "Disable building single-threading variant"
-  option "without-static", "Disable building static library variant"
-
-  deprecated_option "with-icu" => "with-icu4c"
-
-  depends_on "icu4c" => :optional
-
   def install
     # Force boost to compile with the desired compiler
     open("user-config.jam", "a") do |file|
@@ -30,14 +22,8 @@ class BoostAT166 < Formula
     bootstrap_args = %W[
       --prefix=#{prefix}
       --libdir=#{lib}
+      --without-icu
     ]
-
-    if build.with? "icu4c"
-      icu4c_prefix = Formula["icu4c"].opt_prefix
-      bootstrap_args << "--with-icu=#{icu4c_prefix}"
-    else
-      bootstrap_args << "--without-icu"
-    end
 
     # Handle libraries that will not be built.
     without_libraries = ["python", "mpi"]
