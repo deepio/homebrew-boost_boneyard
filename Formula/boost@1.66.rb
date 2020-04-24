@@ -20,8 +20,6 @@ class BoostAT166 < Formula
 
   depends_on "icu4c" => :optional
 
-  needs :cxx11
-
   def install
     # Force boost to compile with the desired compiler
     open("user-config.jam", "a") do |file|
@@ -29,7 +27,10 @@ class BoostAT166 < Formula
     end
 
     # libdir should be set by --prefix but isn't
-    bootstrap_args = ["--prefix=#{prefix}", "--libdir=#{lib}"]
+    bootstrap_args = %W[
+      --prefix=#{prefix}
+      --libdir=#{lib}
+    ]
 
     if build.with? "icu4c"
       icu4c_prefix = Formula["icu4c"].opt_prefix
@@ -48,14 +49,16 @@ class BoostAT166 < Formula
     bootstrap_args << "--without-libraries=#{without_libraries.join(",")}"
 
     # layout should be synchronized with boost-python and boost-mpi
-    args = ["--prefix=#{prefix}",
-            "--libdir=#{lib}",
-            "-d2",
-            "-j#{ENV.make_jobs}",
-            "--layout=tagged",
-            "--user-config=user-config.jam",
-            "-sNO_LZMA=1",
-            "install"]
+    args = %W[
+      --prefix=#{prefix}
+      --libdir=#{lib}
+      -d2
+      -j#{ENV.make_jobs}
+      --layout=tagged
+      --user-config=user-config.jam
+      --sNO_LZMA=1
+      install
+    ]
 
     if build.with? "single"
       args << "threading=multi,single"
