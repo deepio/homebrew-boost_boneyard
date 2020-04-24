@@ -58,19 +58,10 @@ class BoostAT166 < Formula
       --user-config=user-config.jam
       --sNO_LZMA=1
       install
+      threading=multi,single
+      link=shared,static
     ]
 
-    if build.with? "single"
-      args << "threading=multi,single"
-    else
-      args << "threading=multi"
-    end
-
-    if build.with? "static"
-      args << "link=shared,static"
-    else
-      args << "link=shared"
-    end
 
     # Trunk starts using "clang++ -x c" to select C compiler which breaks C++11
     # handling using ENV.cxx11. Using "cxxflags" and "linkflags" still works.
