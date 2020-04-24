@@ -13,9 +13,9 @@ class BoostAT168 < Formula
     sha256 "40f3b92d543b9ffe437f1724c26ab55f9873e59fdc7afd46d82c83239a03fa9b" => :sierra
   end
 
-  depends_on "icu4c"
+  keg_only :versioned_formula
 
-  needs :cxx14
+  depends_on "icu4c"
 
   def install
     # Force boost to compile with the desired compiler

@@ -12,6 +12,8 @@ class BoostAT166 < Formula
     sha256 "6352d4f65d7595c1eff62c6ce07588944122fa3305a77813fdbc16747b7dddce" => :el_capitan
   end
 
+  keg_only :versioned_formula
+
   def install
     # Force boost to compile with the desired compiler
     open("user-config.jam", "a") do |file|

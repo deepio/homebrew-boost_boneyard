@@ -13,6 +13,8 @@ class BoostAT169 < Formula
     sha256 "35809d731353341b017e78dc21d396b4a05cc8c3f7cb86abbd98e22af092ffef" => :sierra
   end
 
+  keg_only :versioned_formula
+
   depends_on "icu4c"
 
   def install
